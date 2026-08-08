@@ -40,7 +40,7 @@ public class PromotionService {
         promotion.setCode(request.code().toUpperCase());
         promotion.setName(request.name());
         promotion.setType(request.type());
-        promotion.setValue(request.value());
+        promotion.setDiscountValue(request.value());
         promotion.setScope(request.scope());
         promotion.setMaxUsage(request.maxUsage());
         promotion.setValidFrom(request.validFrom());
@@ -87,14 +87,14 @@ public class PromotionService {
             throw new BusinessRuleException("Promotion does not apply to this event venue");
         }
         return switch (promotion.getType()) {
-            case PERCENTAGE -> subtotal.multiply(promotion.getValue()).divide(BigDecimal.valueOf(100));
-            case FIXED_AMOUNT -> promotion.getValue().multiply(BigDecimal.valueOf(quantity));
+            case PERCENTAGE -> subtotal.multiply(promotion.getDiscountValue()).divide(BigDecimal.valueOf(100));
+            case FIXED_AMOUNT -> promotion.getDiscountValue().multiply(BigDecimal.valueOf(quantity));
         };
     }
 
     private PromotionResponse toResponse(Promotion promotion) {
         return new PromotionResponse(promotion.getId(), promotion.getCode(), promotion.getName(),
-                promotion.getType(), promotion.getValue(), promotion.getScope(),
+                promotion.getType(), promotion.getDiscountValue(), promotion.getScope(),
                 promotion.getVenue() != null ? promotion.getVenue().getId() : null,
                 promotion.isActive(), promotion.getMaxUsage(), promotion.getUsedCount(),
                 promotion.getValidFrom(), promotion.getValidUntil());

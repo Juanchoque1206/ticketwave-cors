@@ -13,7 +13,6 @@ com\ticketwave\ticketorder\infrastructure\config\EventBusConfig.class
 com\ticketwave\ticketorder\infrastructure\config\MonolithClientConfig.class
 com\ticketwave\ticketorder\infrastructure\rest\MarkOrderRequest.class
 com\ticketwave\domain\commands\Command.class
-com\ticketwave\ticketorder\infrastructure\config\LocalBusConfig.class
 com\ticketwave\ticketorder\infrastructure\controller\GlobalExceptionHandler.class
 com\ticketwave\domain\bus\EventHandler.class
 com\ticketwave\ticketorder\application\port\PromotionGateway.class
@@ -51,6 +50,7 @@ com\ticketwave\domain\events\TicketDeliveryFailed.class
 com\ticketwave\ticketorder\domain\order\TicketOrderRepository.class
 com\ticketwave\ticketorder\infrastructure\controller\TicketOrderController.class
 com\ticketwave\ticketorder\infrastructure\rest\PromotionQuoteRequest.class
+com\ticketwave\ticketorder\infrastructure\config\InMemoryBusConfig.class
 com\ticketwave\ticketorder\infrastructure\exception\ResourceNotFoundException.class
 com\ticketwave\domain\events\TicketIssued.class
 com\ticketwave\domain\commands\CommandHandler.class

@@ -49,7 +49,7 @@ C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticket
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\bus\RabbitMQCommandBusAdapter.java
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\bus\RabbitMQEventBusAdapter.java
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\config\EventBusConfig.java
-C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\config\LocalBusConfig.java
+C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\config\InMemoryBusConfig.java
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\config\MonolithClientConfig.java
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\controller\GlobalExceptionHandler.java
 C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketorder-write\src\main\java\com\ticketwave\ticketorder\infrastructure\controller\TicketOrderController.java

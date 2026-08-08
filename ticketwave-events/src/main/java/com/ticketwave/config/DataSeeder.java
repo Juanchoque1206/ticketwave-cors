@@ -94,7 +94,7 @@ public class DataSeeder {
             promo.setCode("WELCOME10");
             promo.setName("Welcome discount");
             promo.setType(PromotionType.PERCENTAGE);
-            promo.setValue(new BigDecimal("10.00"));
+            promo.setDiscountValue(new BigDecimal("10.00"));
             promo.setScope(PromotionScope.NATIONAL);
             promo.setMaxUsage(1000);
             promo.setUsedCount(0);

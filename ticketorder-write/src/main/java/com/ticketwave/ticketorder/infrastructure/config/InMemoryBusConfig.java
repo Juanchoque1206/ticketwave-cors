@@ -9,20 +9,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Local development infrastructure: in-memory bus doubles so the application
- * starts offline with the {@code local} profile and no RabbitMQ broker.
+ * In-memory bus doubles for development without a RabbitMQ broker. Active under
+ * the {@code local} (H2) and {@code postgres} profiles; the {@code rabbitmq}
+ * profile uses the real broker adapters instead.
  */
 @Configuration
-@Profile("local")
-public class LocalBusConfig {
+@Profile({"local", "postgres"})
+public class InMemoryBusConfig {
 
     @Bean
-    public EventBus localEventBus() {
+    public EventBus inMemoryEventBus() {
         return new LocalEventBus();
     }
 
     @Bean
-    public CommandBus localCommandBus() {
+    public CommandBus inMemoryCommandBus() {
         return new LocalCommandBus();
     }
 }

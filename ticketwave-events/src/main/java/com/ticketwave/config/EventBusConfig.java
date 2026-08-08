@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.ticketwave.domain.bus.CommandBus;
 import com.ticketwave.domain.bus.EventBus;
+import com.ticketwave.infrastructure.bus.InMemoryCommandBus;
+import com.ticketwave.infrastructure.bus.InMemoryEventBus;
 import com.ticketwave.infrastructure.bus.RabbitMQCommandBusAdapter;
 import com.ticketwave.infrastructure.bus.RabbitMQEventBusAdapter;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -17,9 +19,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * RabbitMQ is the only bus transport: events are routed on the ticketwave.events
- * exchange and commands on the dedicated ticketwave.commands exchange. The beans
- * are only created under the rabbitmq profile; tests provide in-memory doubles.
+ * RabbitMQ is the production bus transport: events are routed on the
+ * ticketwave.events exchange and commands on the dedicated ticketwave.commands
+ * exchange. The RabbitMQ beans are only created under the rabbitmq profile;
+ * the local and test profiles use in-memory doubles so the app runs without a
+ * broker.
  */
 @Configuration
 public class EventBusConfig {
@@ -34,6 +38,18 @@ public class EventBusConfig {
     @Profile("rabbitmq")
     public CommandBus rabbitMqCommandBus(RabbitTemplate rabbitTemplate, AmqpAdmin amqpAdmin) {
         return new RabbitMQCommandBusAdapter(rabbitTemplate, amqpAdmin);
+    }
+
+    @Bean
+    @Profile({"local", "test"})
+    public EventBus inMemoryEventBus() {
+        return new InMemoryEventBus();
+    }
+
+    @Bean
+    @Profile({"local", "test"})
+    public CommandBus inMemoryCommandBus() {
+        return new InMemoryCommandBus();
     }
 
     @Bean

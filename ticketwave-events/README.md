@@ -45,7 +45,7 @@ ticketwave-events/
 mvn spring-boot:run -Dspring-boot.run.profiles=local
 
 # Producción (PostgreSQL + Redis, configuración por variables de entorno)
-DB_URL=jdbc:postgresql://localhost:5432/ticketwave \
+DB_URL=jdbc:postgresql://localhost:5432/ticketwave_cors \
 DB_USERNAME=postgres DB_PASSWORD=postgres \
 REDIS_HOST=localhost REDIS_PORT=6379 \
 JWT_SECRET=<secreto-de-32-bytes> \

@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * Test-only in-memory EventBus double, active under the test profile so the
+ * In-memory EventBus double, active under the local and test profiles so the
  * application context loads without a RabbitMQ broker.
  */
 public class InMemoryEventBus implements EventBus {
