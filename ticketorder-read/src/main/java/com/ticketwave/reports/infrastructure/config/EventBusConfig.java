@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.ticketwave.domain.bus.EventBus;
+import com.ticketwave.reports.infrastructure.bus.InMemoryEventBus;
 import com.ticketwave.reports.infrastructure.bus.RabbitMQEventBusAdapter;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,8 +19,9 @@ import org.springframework.context.annotation.Profile;
  * RabbitMQ is the shared cross-service bus. The polymorphic type validator only
  * allows the shared contract packages, so a message published by the monolith or
  * the TicketOrder service (e.g. PaymentAuthorized) is deserialized into the
- * identical record type this service keeps on its own classpath. Beans are only
- * created under the rabbitmq profile; tests provide an in-memory double.
+ * identical record type this service keeps on its own classpath. The RabbitMQ
+ * transport is created under the rabbitmq profile; the local profile uses an
+ * in-memory double so the service starts without a broker.
  */
 @Configuration
 public class EventBusConfig {
@@ -28,6 +30,12 @@ public class EventBusConfig {
     @Profile("rabbitmq")
     public EventBus rabbitMqEventBus(RabbitTemplate rabbitTemplate, AmqpAdmin amqpAdmin) {
         return new RabbitMQEventBusAdapter(rabbitTemplate, amqpAdmin);
+    }
+
+    @Bean
+    @Profile("local")
+    public EventBus inMemoryEventBus() {
+        return new InMemoryEventBus();
     }
 
     @Bean

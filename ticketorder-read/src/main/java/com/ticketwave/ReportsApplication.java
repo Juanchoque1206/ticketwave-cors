@@ -1,4 +1,4 @@
-package com.ticketwave.reports;
+package com.ticketwave;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

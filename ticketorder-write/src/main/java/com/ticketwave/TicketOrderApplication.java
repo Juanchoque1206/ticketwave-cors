@@ -1,4 +1,4 @@
-package com.ticketwave.ticketorder;
+package com.ticketwave;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
