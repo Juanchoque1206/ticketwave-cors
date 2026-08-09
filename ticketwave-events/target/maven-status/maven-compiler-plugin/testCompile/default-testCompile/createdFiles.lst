@@ -1,2 +1,3 @@
 com\ticketwave\TicketOrderFlowIntegrationTest.class
+com\ticketwave\EventControllerTest.class
 com\ticketwave\infrastructure\saga\InMemorySagaStateRepository.class

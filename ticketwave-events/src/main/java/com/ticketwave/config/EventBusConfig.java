@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Profile;
  * RabbitMQ is the production bus transport: events are routed on the
  * ticketwave.events exchange and commands on the dedicated ticketwave.commands
  * exchange. The RabbitMQ beans are only created under the rabbitmq profile;
- * the local and test profiles use in-memory doubles so the app runs without a
+ * any other profile (or none) uses in-memory doubles so the app runs without a
  * broker.
  */
 @Configuration
@@ -41,13 +41,13 @@ public class EventBusConfig {
     }
 
     @Bean
-    @Profile({"local", "test"})
+    @Profile("!rabbitmq")
     public EventBus inMemoryEventBus() {
         return new InMemoryEventBus();
     }
 
     @Bean
-    @Profile({"local", "test"})
+    @Profile("!rabbitmq")
     public CommandBus inMemoryCommandBus() {
         return new InMemoryCommandBus();
     }

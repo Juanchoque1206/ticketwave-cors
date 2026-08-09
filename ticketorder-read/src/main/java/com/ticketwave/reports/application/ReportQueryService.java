@@ -10,6 +10,7 @@ import com.ticketwave.reports.domain.projection.PaymentProjection;
 import com.ticketwave.reports.domain.projection.PaymentProjectionRepository;
 import com.ticketwave.reports.domain.projection.TicketProjection;
 import com.ticketwave.reports.domain.projection.TicketProjectionRepository;
+import com.ticketwave.reports.infrastructure.dto.report.AllReportsResponse;
 import com.ticketwave.reports.infrastructure.dto.report.NotificationReportResponse;
 import com.ticketwave.reports.infrastructure.dto.report.OrderReportResponse;
 import com.ticketwave.reports.infrastructure.dto.report.PaymentReportResponse;
@@ -25,6 +26,7 @@ import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -60,6 +62,19 @@ public class ReportQueryService {
         this.notificationProjectionRepository = notificationProjectionRepository;
         this.eventProjectionRepository = eventProjectionRepository;
         this.appUserProjectionRepository = appUserProjectionRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public AllReportsResponse allReports() {
+        Instant from = Instant.EPOCH;
+        Instant to = Instant.now().plus(1, ChronoUnit.DAYS);
+        return new AllReportsResponse(
+                salesOverview(from, to),
+                salesByEvent(from, to),
+                listOrders(null, null, from, to),
+                listPayments(null, from, to),
+                listTickets(null, from, to),
+                listNotifications(from, to));
     }
 
     @Transactional(readOnly = true)

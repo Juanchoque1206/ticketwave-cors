@@ -1,6 +1,7 @@
 package com.ticketwave.reports.infrastructure.controller;
 
 import com.ticketwave.reports.application.ReportQueryService;
+import com.ticketwave.reports.infrastructure.dto.report.AllReportsResponse;
 import com.ticketwave.reports.infrastructure.dto.report.NotificationReportResponse;
 import com.ticketwave.reports.infrastructure.dto.report.OrderReportResponse;
 import com.ticketwave.reports.infrastructure.dto.report.PaymentReportResponse;
@@ -30,6 +31,11 @@ public class ReportController {
 
     public ReportController(ReportQueryService reportQueryService) {
         this.reportQueryService = reportQueryService;
+    }
+
+    @GetMapping("/all")
+    public AllReportsResponse allReports() {
+        return reportQueryService.allReports();
     }
 
     @GetMapping("/sales/overview")

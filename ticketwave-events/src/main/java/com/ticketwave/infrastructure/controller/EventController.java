@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,6 +41,11 @@ public class EventController {
             @PageableDefault(size = 20) Pageable pageable) {
         EventSearchRequest filters = new EventSearchRequest(city, artist, venue, fromDate, toDate);
         return ResponseEntity.ok(searchEventsUseCase.search(filters, pageable));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EventResponse>> all() {
+        return ResponseEntity.ok(eventService.findAll());
     }
 
     @GetMapping("/{id}")

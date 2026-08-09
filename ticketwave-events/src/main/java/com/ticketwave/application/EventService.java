@@ -41,8 +41,7 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public Page<EventResponse> search(EventSearchRequest filters, Pageable pageable) {
-        Specification<Event> spec = (root, query, cb) -> {
+    public Page<EventResponse> search(EventSearchRequest filters, Pageable pageable) {        Specification<Event> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (filters.city() != null && !filters.city().isBlank()) {
                 predicates.add(cb.equal(cb.lower(root.get("city")), filters.city().toLowerCase()));
@@ -63,6 +62,11 @@ public class EventService {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
         return eventRepository.findAll(spec, pageable).map(this::toResponse);
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventResponse> findAll() {
+        return eventRepository.findAll().stream().map(this::toResponse).toList();
     }
 
     @Transactional(readOnly = true)

@@ -20,8 +20,8 @@ import org.springframework.context.annotation.Profile;
  * allows the shared contract packages, so a message published by the monolith or
  * the TicketOrder service (e.g. PaymentAuthorized) is deserialized into the
  * identical record type this service keeps on its own classpath. The RabbitMQ
- * transport is created under the rabbitmq profile; the local profile uses an
- * in-memory double so the service starts without a broker.
+ * transport is created under the rabbitmq profile; any other profile (local,
+ * none, ...) uses an in-memory double so the service starts without a broker.
  */
 @Configuration
 public class EventBusConfig {
@@ -33,7 +33,7 @@ public class EventBusConfig {
     }
 
     @Bean
-    @Profile("local")
+    @Profile("!rabbitmq & !test")
     public EventBus inMemoryEventBus() {
         return new InMemoryEventBus();
     }

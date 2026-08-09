@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.ticketwave.TicketOrderFlowIntegrationTest" time="3.717" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.ticketwave.EventControllerTest" time="16.289" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -48,7 +48,7 @@
     <property name="localRepository" value="C:\Users\Juan\.m2\repository"/>
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\Juan\AppData\Local\Temp\"/>
-    <property name="com.zaxxer.hikari.pool_number" value="2"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
     <property name="java.version" value="21.0.9"/>
     <property name="user.dir" value="C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketwave-events"/>
     <property name="os.arch" value="amd64"/>
@@ -66,9 +66,9 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[ticketwave-events] "/>
   </properties>
-  <testcase name="orderCreatedEvent_drivesSagaEndToEnd" classname="com.ticketwave.TicketOrderFlowIntegrationTest" time="0.917">
-    <system-out><![CDATA[2026-08-09T14:01:08.637-04:00  INFO 32472 --- [ticketwave-events] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ticketwave.TicketOrderFlowIntegrationTest]: TicketOrderFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-08-09T14:01:08.642-04:00  INFO 32472 --- [ticketwave-events] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ticketwave.TicketwaveApplication for test class com.ticketwave.TicketOrderFlowIntegrationTest
+  <testcase name="getAllEvents_withoutAuthentication_returnsEvents" classname="com.ticketwave.EventControllerTest" time="1.31">
+    <system-out><![CDATA[14:00:52.516 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ticketwave.EventControllerTest]: EventControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:00:52.641 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ticketwave.TicketwaveApplication for test class com.ticketwave.EventControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -79,19 +79,20 @@
 
  :: Spring Boot ::                (v4.0.0)
 
-2026-08-09T14:01:08.758-04:00  INFO 32472 --- [ticketwave-events] [           main] c.t.TicketOrderFlowIntegrationTest       : Starting TicketOrderFlowIntegrationTest using Java 21.0.9 with PID 32472 (started by Juan in C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketwave-events)
-2026-08-09T14:01:08.758-04:00 DEBUG 32472 --- [ticketwave-events] [           main] c.t.TicketOrderFlowIntegrationTest       : Running with Spring Boot v4.0.0, Spring v7.0.1
-2026-08-09T14:01:08.759-04:00  INFO 32472 --- [ticketwave-events] [           main] c.t.TicketOrderFlowIntegrationTest       : The following 1 profile is active: "test"
-2026-08-09T14:01:09.582-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-08-09T14:01:09.582-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-08-09T14:01:09.704-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 117 ms. Found 7 JPA repository interfaces.
-2026-08-09T14:01:10.005-04:00  INFO 32472 --- [ticketwave-events] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-08-09T14:01:10.054-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-08-09T14:01:10.056-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2026-08-09T14:01:10.057-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:ticketwave_test user=SA
-2026-08-09T14:01:10.057-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2026-08-09T14:01:10.059-04:00  WARN 32472 --- [ticketwave-events] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-08-09T14:01:10.060-04:00  INFO 32472 --- [ticketwave-events] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-08-09T14:00:53.076-04:00  INFO 32472 --- [ticketwave-events] [           main] com.ticketwave.EventControllerTest       : Starting EventControllerTest using Java 21.0.9 with PID 32472 (started by Juan in C:\juandev\mdeis\project\complete-version\ticketwave-cors\ticketwave-cors\ticketwave-events)
+2026-08-09T14:00:53.077-04:00 DEBUG 32472 --- [ticketwave-events] [           main] com.ticketwave.EventControllerTest       : Running with Spring Boot v4.0.0, Spring v7.0.1
+2026-08-09T14:00:53.080-04:00  INFO 32472 --- [ticketwave-events] [           main] com.ticketwave.EventControllerTest       : The following 1 profile is active: "test"
+2026-08-09T14:00:54.458-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-08-09T14:00:54.460-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-09T14:00:54.824-04:00  INFO 32472 --- [ticketwave-events] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 355 ms. Found 7 JPA repository interfaces.
+2026-08-09T14:00:56.762-04:00  INFO 32472 --- [ticketwave-events] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-09T14:00:56.906-04:00  INFO 32472 --- [ticketwave-events] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2026-08-09T14:00:57.952-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-09T14:00:58.023-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-09T14:00:58.673-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:ticketwave_test user=SA
+2026-08-09T14:00:58.676-04:00  INFO 32472 --- [ticketwave-events] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-09T14:00:58.727-04:00  WARN 32472 --- [ticketwave-events] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-08-09T14:00:58.791-04:00  INFO 32472 --- [ticketwave-events] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [jdbc:h2:mem:ticketwave_test]
 	Database driver: H2 JDBC Driver
 	Database dialect: H2Dialect
@@ -103,16 +104,31 @@
 	Pool: DatasourceConnectionProviderImpl
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-08-09T14:01:10.230-04:00  INFO 32472 --- [ticketwave-events] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-08-09T14:01:10.287-04:00  INFO 32472 --- [ticketwave-events] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-08-09T14:01:10.376-04:00  INFO 32472 --- [ticketwave-events] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2026-08-09T14:01:10.377-04:00  WARN 32472 --- [ticketwave-events] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2026-08-09T14:01:10.705-04:00  WARN 32472 --- [ticketwave-events] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-08-09T14:01:10.869-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
-2026-08-09T14:01:11.092-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
-2026-08-09T14:01:11.419-04:00  INFO 32472 --- [ticketwave-events] [           main] c.t.TicketOrderFlowIntegrationTest       : Started TicketOrderFlowIntegrationTest in 2.765 seconds (process running for 19.932)
-2026-08-09T14:01:12.224-04:00  INFO 32472 --- [ticketwave-events] [           main] c.t.i.payment.PaymentEventSubscriber     : Payment provider: capture hold for order 9cc15826-7afb-4301-9351-777d677c4d68 total 200.00
-2026-08-09T14:01:12.227-04:00  INFO 32472 --- [ticketwave-events] [           main] c.t.i.venue.VenueEventSubscriber         : Venue system: hold 2 seats for event 44df0f19-c83a-42d6-939a-03ec44fb205a
+2026-08-09T14:01:00.754-04:00  INFO 32472 --- [ticketwave-events] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-09T14:01:00.892-04:00  INFO 32472 --- [ticketwave-events] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-09T14:01:01.155-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-08-09T14:01:01.927-04:00  INFO 32472 --- [ticketwave-events] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-08-09T14:01:01.931-04:00  WARN 32472 --- [ticketwave-events] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-08-09T14:01:04.385-04:00  WARN 32472 --- [ticketwave-events] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-09T14:01:05.073-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-08-09T14:01:05.927-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-08-09T14:01:06.915-04:00 DEBUG 32472 --- [ticketwave-events] [           main] c.t.config.JwtAuthenticationFilter       : Filter 'jwtAuthenticationFilter' configured for use
+2026-08-09T14:01:06.915-04:00 DEBUG 32472 --- [ticketwave-events] [           main] .t.i.s.InternalTokenAuthenticationFilter : Filter 'internalTokenAuthenticationFilter' configured for use
+2026-08-09T14:01:06.917-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-08-09T14:01:06.917-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-08-09T14:01:06.920-04:00  INFO 32472 --- [ticketwave-events] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-08-09T14:01:07.067-04:00  INFO 32472 --- [ticketwave-events] [           main] com.ticketwave.EventControllerTest       : Started EventControllerTest in 14.288 seconds (process running for 15.58)
+2026-08-09T14:01:07.827-04:00  WARN 32472 --- [ticketwave-events] [           main] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/events' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-08-09T14:01:08.448-04:00  WARN 32472 --- [ticketwave-events] [           main] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
 ]]></system-out>
+    <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\Juan\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
   </testcase>
 </testsuite>
