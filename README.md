@@ -1,27 +1,27 @@
 # TicketWave Events
 
-Plataforma monolítica modular (Spring Boot 4, Java 21) para gestión de eventos y venta de tickets, con un flujo unificado de **reserva + compra** basado en `TicketOrder`.
+Modular monolithic platform (Spring Boot 4, Java 21) for event management and ticket sales, with a unified **reserve + purchase** flow based on `TicketOrder`.
 
-## Tecnologías
+## Technologies
 
 - **Java 21**
 - **Spring Boot 4**
-- **Spring Data JPA** + PostgreSQL (H2 para desarrollo local)
+- **Spring Data JPA** + PostgreSQL (H2 for local development)
 - **Spring Security + JWT** (jjwt 0.12)
-- **Redis** (bloqueo de tickets, detección de fraude y snapshots del saga)
-- **Saga orquestado** (EventBus / CommandBus, en memoria o RabbitMQ)
+- **Redis** (ticket locking, fraud detection and saga snapshots)
+- **Orchestrated saga** (EventBus / CommandBus, in-memory or RabbitMQ)
 - **OpenAPI / Swagger UI**
 - **Lombok**
 
-## Requerimientos
+## Requirements
 
 - JDK 21
 - Maven 3.9+
-- PostgreSQL 15+ (base de datos `ticketwave_cors`)
-- Redis 7+ (el saga y el caché persisten ahí)
-- RabbitMQ (opcional, solo con el perfil `rabbitmq`)
+- PostgreSQL 15+ (database `ticketwave_cors`)
+- Redis 7+ (saga and cache persist there)
+- RabbitMQ (optional, only with the `rabbitmq` profile)
 
-## Estructura
+## Structure
 
 ```
 ticketwave-events/
@@ -29,59 +29,59 @@ ticketwave-events/
  │   ├── TicketwaveApplication.java
  │   ├── config/            # Security, JWT, OpenAPI, Cache, DataSeeder, EventBus
  │   ├── controller/        # Event, Payment, Ticket, User, Notification, Promotion, Fraud
- │   ├── application/       # Use cases y servicios + SagaRecoveryJob
- │   ├── domain/            # Entidades, enums, events, commands, bus y saga
- │   ├── repository/        # Contratos de acceso a datos
- │   ├── infrastructure/    # Repositorios JPA, bus (RabbitMQ/in-memory), clientes HTTP, security
- │   ├── exception/         # Excepciones + GlobalExceptionHandler
- │   └── modules/           # Fronteras modulares (preparación para microservicios)
+ │   ├── application/       # Use cases and services + SagaRecoveryJob
+ │   ├── domain/            # Entities, enums, events, commands, bus and saga
+ │   ├── repository/        # Data access contracts
+ │   ├── infrastructure/    # JPA repositories, bus (RabbitMQ/in-memory), HTTP clients, security
+ │   ├── exception/         # Exceptions + GlobalExceptionHandler
+ │   └── modules/           # Modular boundaries (preparation for microservices)
  ├── src/main/resources/    # application.yml, application-local.yml
- ├── diagrams/c4model/      # Diagramas arquitectónicos (modelo C4)
+ ├── diagrams/c4model/      # Architecture diagrams (C4 model)
  └── src/test/
 ```
 
-## Diagramas C4
+## C4 diagrams
 
-Los diagramas de arquitectura (modelo C4) están en `diagrams/c4model`:
+Architecture diagrams (C4 model) are in `diagrams/c4model`:
 
-| Diagrama | Archivo |
+| Diagram | File |
 |----------|---------|
-| C1 - Contexto del sistema | `diagrams/c4model/ticketwave-c1-context.drawio.svg` |
-| C2 - Contenedores | `diagrams/c4model/ticketwave-c2-container.drawio.svg` |
-| C3 - Saga cross-service | `diagrams/c4model/ticketwave-c3-cross-service-saga.drawio.svg` |
+| C1 - System context | `diagrams/c4model/ticketwave-c1-context.drawio.svg` |
+| C2 - Containers | `diagrams/c4model/ticketwave-c2-container.drawio.svg` |
+| C3 - Cross-service saga | `diagrams/c4model/ticketwave-c3-cross-service-saga.drawio.svg` |
 | C3 - Digital ticket service | `diagrams/c4model/ticketwave-c3-digital-ticket-service.drawio.svg` |
-| C3 - Búsqueda de eventos | `diagrams/c4model/ticketwave-c3-event-search.drawio.svg` |
+| C3 - Event search | `diagrams/c4model/ticketwave-c3-event-search.drawio.svg` |
 | C3 - Notifications service | `diagrams/c4model/ticketwave-c3-notifications-service.drawio.svg` |
 | C3 - Payment service | `diagrams/c4model/ticketwave-c3-payment-service.drawio.svg` |
 | C3 - Promotions service | `diagrams/c4model/ticketwave-c3-promotions-service.drawio.svg` |
-| C3 - Flujo de compra | `diagrams/c4model/ticketwave-c3-purchase-flow.drawio.svg` |
-| C3 - Reembolsos y cancelaciones | `diagrams/c4model/ticketwave-c3-refunds-cancellations.drawio.svg` |
+| C3 - Purchase flow | `diagrams/c4model/ticketwave-c3-purchase-flow.drawio.svg` |
+| C3 - Refunds and cancellations | `diagrams/c4model/ticketwave-c3-refunds-cancellations.drawio.svg` |
 | C3 - Saga orchestrator | `diagrams/c4model/ticketwave-c3-saga-orchestrator.drawio.svg` |
 
-## Ejecución
+## Running
 
 ```bash
-# Desarrollo local (H2 en memoria, bus en memoria, sin Redis externo)
+# Local development (in-memory H2, in-memory bus, no external Redis)
 mvn spring-boot:run -Dspring-boot.run.profiles=local
 
-# PostgreSQL + Redis, configuración por variables de entorno
+# PostgreSQL + Redis, configured through environment variables
 $env:DB_URL="jdbc:postgresql://localhost:5432/ticketwave_cors"
 $env:DB_USERNAME="postgres"; $env:DB_PASSWORD="postgres"
 $env:REDIS_HOST="localhost"; $env:REDIS_PORT="6379"
-$env:JWT_SECRET="<secreto-de-32-bytes>"
+$env:JWT_SECRET="<32-byte-secret>"
 mvn spring-boot:run
 ```
 
-Por defecto (sin perfil activo) la app usa PostgreSQL + Redis y el bus **en memoria**.
-Para activar el transporte con RabbitMQ:
+By default (no active profile) the app uses PostgreSQL + Redis and the **in-memory** bus.
+To enable the RabbitMQ transport:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.profiles=rabbitmq
 ```
 
-## Docker (dependencias externas)
+## Docker (external dependencies)
 
-Contenedores independientes (puedes iniciarlos por separado o todos juntos):
+Standalone containers (you can start them separately or all together):
 
 ```bash
 # rabbitmq
@@ -109,103 +109,103 @@ docker run -d --name prometheus \
 docker run -d --name grafana -p 3000:3000 grafana/grafana
 ```
 
-Enlaces externos:
+External links:
 
 - RabbitMQ Management: http://localhost:15672/
 - Prometheus Targets: http://localhost:9090/targets
 - Grafana: http://localhost:3000/
 
-## Configuración por variables de entorno (application.yml)
+## Environment variable configuration (application.yml)
 
-| Variable             | Default                              | Uso                              |
-|----------------------|--------------------------------------|----------------------------------|
-| `DB_URL`             | `jdbc:postgresql://localhost:5432/ticketwave_cors` | Datasource JDBC |
-| `DB_USERNAME`        | `postgres`                           | Usuario de la base de datos      |
-| `DB_PASSWORD`        | `postgres`                           | Contraseña de la base de datos   |
-| `REDIS_HOST`         | `localhost`                          | Host de Redis                    |
-| `REDIS_PORT`         | `6379`                               | Puerto de Redis                  |
-| `JWT_SECRET`         | valor por defecto de desarrollo      | Secreto JWT (mínimo 32 bytes)    |
-| `JWT_EXPIRATION`     | `86400000`                           | Expiración del token (ms)        |
-| `ORDER_TTL_MINUTES`  | `15`                                 | TTL de la orden (reserva)        |
-| `INTERNAL_TOKEN`     | `change-me-internal-token`           | Token para llamadas servicio-a-servicio |
-| `ORDER_SERVICE_URL`  | `http://localhost:8090`              | URL del servicio ticketorder-write |
+| Variable            | Default                              | Purpose                           |
+|---------------------|--------------------------------------|-----------------------------------|
+| `DB_URL`            | `jdbc:postgresql://localhost:5432/ticketwave_cors` | JDBC datasource |
+| `DB_USERNAME`       | `postgres`                           | Database username                 |
+| `DB_PASSWORD`       | `postgres`                           | Database password                 |
+| `REDIS_HOST`        | `localhost`                          | Redis host                        |
+| `REDIS_PORT`        | `6379`                               | Redis port                        |
+| `JWT_SECRET`        | default development value            | JWT secret (minimum 32 bytes)     |
+| `JWT_EXPIRATION`    | `86400000`                           | Token expiration (ms)             |
+| `ORDER_TTL_MINUTES` | `15`                                 | Order TTL (reservation)           |
+| `INTERNAL_TOKEN`    | `change-me-internal-token`           | Token for service-to-service calls |
+| `ORDER_SERVICE_URL` | `http://localhost:8090`              | ticketorder-write service URL      |
 
-## Monolito legacy
+## Legacy monolith
 
 Swagger UI: http://localhost:8081/swagger-ui/index.html#/Events/search
 
-## Arquitectura CQRS (read / write)
+## CQRS architecture (read / write)
 
-Documentación Swagger de los servicios CQRS de la plataforma:
+Swagger documentation for the platform's CQRS services:
 
-| Servicio | Documentación Swagger |
+| Service | Swagger documentation |
 |----------|----------------------|
-| **Read (reportes)** | http://localhost:8091/swagger-ui/index.html#/report-controller/allReports |
+| **Read (reports)** | http://localhost:8091/swagger-ui/index.html#/report-controller/allReports |
 | **Write (ticket orders - reserve)** | http://localhost:8093/swagger-ui/index.html#/Ticket%20Orders/reserve |
 
-## Credenciales de demostración (seed automático, perfil `local`)
+## Demo credentials (automatic seed, `local` profile)
 
-| Usuario | Contraseña | Rol   |
-|---------|------------|-------|
-| admin   | admin1234  | ADMIN |
-| user    | user1234   | USER  |
+| User  | Password | Role   |
+|-------|----------|--------|
+| admin | admin1234 | ADMIN |
+| user  | user1234  | USER   |
 
-## Endpoints principales
+## Main endpoints
 
-| Método | Ruta                                   | Descripción                                  | Acceso  |
-|--------|----------------------------------------|----------------------------------------------|---------|
-| GET    | `/api/events`                          | Búsqueda paginada (ciudad, artista, venue, fecha) | Público |
-| GET    | `/api/events/all`                      | Lista completa de eventos                    | Público |
-| GET    | `/api/events/{id}`                     | Detalle de un evento                         | Público |
-| POST   | `/api/events`                          | Crear evento                                 | ADMIN   |
-| PUT    | `/api/events/{id}`                     | Actualizar evento                            | ADMIN   |
-| DELETE | `/api/events/{id}`                     | Cancelar evento                              | ADMIN   |
-| POST   | `/api/events/{id}/reserve`             | Reservar capacidad                           | ADMIN   |
-| POST   | `/api/events/{id}/release`             | Liberar capacidad                            | ADMIN   |
-| POST   | `/api/payments`                        | Confirmar reserva y crear pago               | Autenticado |
-| GET    | `/api/payments/order/{orderId}`        | Consultar pago por orden                     | Autenticado |
-| GET    | `/api/tickets/{id}`                    | Detalle de ticket                            | Autenticado |
-| GET    | `/api/tickets/order/{orderId}`         | Tickets de una orden                         | Autenticado |
-| POST   | `/api/tickets/validate`                | Validar ticket en venue                      | ADMIN   |
-| POST   | `/api/tickets/{id}/refund`             | Reembolsar ticket                            | Autenticado |
-| POST   | `/api/users/register`                  | Registro                                     | Público |
-| POST   | `/api/users/login`                     | Login → JWT                                  | Público |
-| GET    | `/api/users/me`                        | Perfil del usuario autenticado               | Autenticado |
-| GET    | `/api/promotions`                      | Promociones activas                          | Público |
-| POST   | `/api/promotions`                      | Crear promoción                              | ADMIN   |
-| POST   | `/api/promotions/{code}/quote`         | Calcular descuento                           | ADMIN   |
-| POST   | `/api/promotions/{code}/increment-usage` | Incrementar uso                             | ADMIN   |
-| GET    | `/api/notifications`                   | Notificaciones del usuario                   | Autenticado |
-| PATCH  | `/api/notifications/{id}/read`         | Marcar notificación como leída               | Autenticado |
-| GET    | `/api/fraud/check`                     | Evaluación de riesgo de fraude               | Autenticado |
-| POST   | `/api/fraud/guard`                     | Bloquear intentos por usuario/IP             | ADMIN   |
-| POST   | `/api/fraud/orders`                    | Marcar orden como fraudulenta                | ADMIN   |
+| Method | Route                                | Description                              | Access  |
+|--------|--------------------------------------|------------------------------------------|---------|
+| GET    | `/api/events`                        | Paginated search (city, artist, venue, date) | Public |
+| GET    | `/api/events/all`                    | Full list of events                      | Public |
+| GET    | `/api/events/{id}`                   | Event details                            | Public |
+| POST   | `/api/events`                        | Create event                             | ADMIN   |
+| PUT    | `/api/events/{id}`                   | Update event                             | ADMIN   |
+| DELETE | `/api/events/{id}`                   | Cancel event                             | ADMIN   |
+| POST   | `/api/events/{id}/reserve`           | Reserve capacity                         | ADMIN   |
+| POST   | `/api/events/{id}/release`           | Release capacity                         | ADMIN   |
+| POST   | `/api/payments`                      | Confirm reservation and create payment   | Authenticated |
+| GET    | `/api/payments/order/{orderId}`      | Get payment by order                     | Authenticated |
+| GET    | `/api/tickets/{id}`                  | Ticket details                           | Authenticated |
+| GET    | `/api/tickets/order/{orderId}`       | Tickets of an order                      | Authenticated |
+| POST   | `/api/tickets/validate`              | Validate ticket at venue                 | ADMIN   |
+| POST   | `/api/tickets/{id}/refund`           | Refund ticket                            | Authenticated |
+| POST   | `/api/users/register`                | Registration                             | Public |
+| POST   | `/api/users/login`                   | Login → JWT                              | Public |
+| GET    | `/api/users/me`                      | Profile of the authenticated user        | Authenticated |
+| GET    | `/api/promotions`                    | Active promotions                        | Public |
+| POST   | `/api/promotions`                    | Create promotion                         | ADMIN   |
+| POST   | `/api/promotions/{code}/quote`       | Calculate discount                       | ADMIN   |
+| POST   | `/api/promotions/{code}/increment-usage` | Increment usage                       | ADMIN   |
+| GET    | `/api/notifications`                 | User notifications                       | Authenticated |
+| PATCH  | `/api/notifications/{id}/read`       | Mark notification as read                | Authenticated |
+| GET    | `/api/fraud/check`                   | Fraud risk assessment                    | Authenticated |
+| POST   | `/api/fraud/guard`                   | Block attempts by user/IP                | ADMIN   |
+| POST   | `/api/fraud/orders`                  | Mark order as fraudulent                 | ADMIN   |
 
-## Flujo de adquisición (saga TicketOrder)
+## Purchase flow (TicketOrder saga)
 
-1. `ticketorder-write` publica `TicketOrderCreated` → el orquestador arranca el saga.
-2. `ProcessPaymentCommand` → al confirmarse se emite el pago y se autoriza.
-3. `IssueTicketCommand` → se emiten los tickets digitales con código QR (`TicketIssued`).
-4. `NotifyOrderCommand` → se envían las notificaciones al usuario.
-5. Compensaciones: pago fallido cancela la orden; entrega de ticket fallida reembolsa el pago; ambos convergen en `COMPENSATED`.
-6. Los snapshots del saga se persisten en Redis (`SagaStateRepository`) y `SagaRecoveryJob` reanuda los sagas interrumpidos (habilitable con `ticketwave.saga.recovery-enabled`).
+1. `ticketorder-write` publishes `TicketOrderCreated` → the orchestrator starts the saga.
+2. `ProcessPaymentCommand` → on confirmation the payment is settled and authorized.
+3. `IssueTicketCommand` → digital tickets with QR code are issued (`TicketIssued`).
+4. `NotifyOrderCommand` → notifications are sent to the user.
+5. Compensations: a failed payment cancels the order; a failed ticket delivery refunds the payment; both converge on `COMPENSATED`.
+6. Saga snapshots are persisted in Redis (`SagaStateRepository`) and `SagaRecoveryJob` resumes interrupted sagas (enable with `ticketwave.saga.recovery-enabled`).
 
-## Bus de eventos / comandos
+## Event / command bus
 
-- Perfil `rabbitmq`: transporte real sobre RabbitMQ (`RabbitMQEventBusAdapter` / `RabbitMQCommandBusAdapter`).
-- Cualquier otro perfil (o ninguno): dobles en memoria (`InMemoryEventBus` / `InMemoryCommandBus`), sin broker.
+- `rabbitmq` profile: real transport over RabbitMQ (`RabbitMQEventBusAdapter` / `RabbitMQCommandBusAdapter`).
+- Any other profile (or none): in-memory doubles (`InMemoryEventBus` / `InMemoryCommandBus`), no broker.
 
-## Pruebas
+## Testing
 
 ```bash
 mvn test
 ```
 
-Los tests usan el perfil `test` (H2 en memoria + bus en memoria).
+Tests use the `test` profile (in-memory H2 + in-memory bus).
 
-## Seguridad
+## Security
 
-- JWT bearer token emitido en `/api/users/login` y `/api/users/register`.
-- Endpoints administrativos protegidos con `@PreAuthorize("hasRole('ADMIN')")`.
-- Llamadas servicio-a-servicio autenticadas con header `X-Internal-Token`.
-- Detección de fraude: límite de intentos por usuario/IP en Redis, prevención de órdenes duplicadas.
+- JWT bearer token issued at `/api/users/login` and `/api/users/register`.
+- Admin endpoints protected with `@PreAuthorize("hasRole('ADMIN')")`.
+- Service-to-service calls authenticated with the `X-Internal-Token` header.
+- Fraud detection: attempt limit per user/IP in Redis, duplicate order prevention.
