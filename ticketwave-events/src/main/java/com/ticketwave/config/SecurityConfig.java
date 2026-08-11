@@ -41,7 +41,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/events/*/reserve",
-                                "/api/events/*/release",
                                 "/api/promotions/*/quote",
                                 "/api/promotions/*/increment-usage",
                                 "/api/fraud/guard",
@@ -57,8 +56,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/h2-console/**",
                                 "/actuator/health",
-                                "/",
-                                "/api/events/**"
+                                "/"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

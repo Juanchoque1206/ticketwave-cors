@@ -41,7 +41,8 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public Page<EventResponse> search(EventSearchRequest filters, Pageable pageable) {        Specification<Event> spec = (root, query, cb) -> {
+    public Page<EventResponse> search(EventSearchRequest filters, Pageable pageable) {
+        Specification<Event> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (filters.city() != null && !filters.city().isBlank()) {
                 predicates.add(cb.equal(cb.lower(root.get("city")), filters.city().toLowerCase()));
