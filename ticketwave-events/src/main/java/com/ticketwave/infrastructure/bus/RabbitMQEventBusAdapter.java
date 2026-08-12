@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public class RabbitMQEventBusAdapter implements EventBus {
 
     public static final String EXCHANGE = "ticketwave.events";
-    public static final String QUEUE = "ticketwave.events.all";
+    public static final String QUEUE = "ticketwave.events.monolith";
     public static final String ROUTING_KEY = "#";
 
     private final RabbitTemplate rabbitTemplate;

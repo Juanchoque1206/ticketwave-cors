@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public class RabbitMQCommandBusAdapter implements CommandBus {
 
     public static final String EXCHANGE = "ticketwave.commands";
-    public static final String QUEUE = "ticketwave.commands.all";
+    public static final String QUEUE = "ticketwave.commands.write";
     public static final String ROUTING_KEY = "#";
 
     private final RabbitTemplate rabbitTemplate;
